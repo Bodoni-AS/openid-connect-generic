@@ -70,3 +70,4 @@ tools/local-env/wp-content/upgrade/*
 !tools/local-env/wp-content/plugins/.gitkeep
 !tools/local-env/wp-content/plugins/daggerhart-openid-connect-generic/.gitkeep
 
+.vscode/settings.json

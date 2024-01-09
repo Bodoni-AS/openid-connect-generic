@@ -224,7 +224,12 @@ class OpenID_Connect_Generic_Client_Wrapper {
 			$separator = '&';
 		}
 
-		$url_format = '%1$s%2$sresponse_type=code&scope=%3$s&client_id=%4$s&state=%5$s&redirect_uri=%6$s';
+		// Generate a nonce for the url
+		$nonce = bin2hex(random_bytes(55));
+		//$custom_redirect = 'https://matoghelse.org/wp-admin/admin-ajax.php?action=openid-connect-authorize';
+
+		$url_format = '%1$s%2$sresponse_type=%9$s&response_mode=form_post&scope=%3$s&nonce=%8$s&client_id=%4$s&state=%5$s&redirect_uri=%6$s';
+		// ORIGINAL $url_format = '%1$s%2$sresponse_type=code&scope=%3$s&client_id=%4$s&state=%5$s&redirect_uri=%6$s';
 		if ( ! empty( $atts['acr_values'] ) ) {
 			$url_format .= '&acr_values=%7$s';
 		}
@@ -237,8 +242,11 @@ class OpenID_Connect_Generic_Client_Wrapper {
 			rawurlencode( $atts['client_id'] ),
 			$this->client->new_state( $atts['redirect_to'] ),
 			rawurlencode( $atts['redirect_uri'] ),
-			rawurlencode( $atts['acr_values'] )
+			rawurlencode( $atts['acr_values'] ),
+			$nonce,
+			rawurlencode('code id_token')
 		);
+
 
 		$url = apply_filters( 'openid-connect-generic-auth-url', $url );
 		$this->logger->log( $url, 'make_authentication_url' );
