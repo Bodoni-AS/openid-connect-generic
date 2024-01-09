@@ -60,6 +60,7 @@ class OpenID_Connect_Generic_Login_Form {
 
 		// Add a shortcode for the login button.
 		add_shortcode( 'openid_connect_generic_login_button', array( $login_form, 'make_login_button' ) );
+		add_shortcode( 'openid_connect_generic_login_url', array( $login_form, 'make_login_url' ) );
 
 		$login_form->handle_redirect_login_type_auto();
 	}
@@ -161,6 +162,14 @@ class OpenID_Connect_Generic_Login_Form {
 		HTML;
 
 		return $login_button;
+	}
+
+	public function make_login_url( $atts = array() ) {
+
+		$href = $this->client_wrapper->get_authentication_url( $atts );
+		$href = esc_url_raw( $href );
+
+		return $href;
 	}
 
 	/**
