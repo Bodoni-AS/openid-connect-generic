@@ -138,7 +138,8 @@ class OpenID_Connect_Generic_Login_Form {
 
 		$atts = shortcode_atts(
 			array(
-				'button_text' => __( 'Login with OpenID Connect', 'daggerhart-openid-connect-generic' ),
+				//'button_text' => __( 'Login with OpenID Connect', 'daggerhart-openid-connect-generic' ),
+				'button_text' => __( 'Logg inn', 'daggerhart-openid-connect-generic' ),
 			),
 			$atts,
 			'openid_connect_generic_login_button'
@@ -150,11 +151,14 @@ class OpenID_Connect_Generic_Login_Form {
 		$href = $this->client_wrapper->get_authentication_url( $atts );
 		$href = esc_url_raw( $href );
 
+// 		$login_button = <<<HTML
+// <div class="openid-connect-login-button" style="margin: 1em 0; text-align: center;">
+// 	<a class="button button-large" href="{$href}">{$text}</a>
+// </div>
+// HTML;
 		$login_button = <<<HTML
-<div class="openid-connect-login-button" style="margin: 1em 0; text-align: center;">
-	<a class="button button-large" href="{$href}">{$text}</a>
-</div>
-HTML;
+		<a class="icon-link min-side icon-min-side" href="{$href}">{$text}</a>
+		HTML;
 
 		return $login_button;
 	}
