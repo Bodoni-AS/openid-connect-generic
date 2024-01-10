@@ -192,6 +192,15 @@ class OpenID_Connect_Generic_Client_Wrapper {
 		return apply_filters( 'openid-connect-generic-client-redirect-to', $redirect_url );
 	}
 
+		/**
+	 * Retrieves the URL for ending a session.
+	 *
+	 * @return string The URL for ending a session.
+	 */
+	public function get_endsession_url() {
+		return $this->settings->endpoint_end_session;
+	}
+
 	/**
 	 * Create a single use authentication url
 	 *
