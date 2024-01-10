@@ -60,6 +60,7 @@ class OpenID_Connect_Generic_Login_Form {
 
 		// Add a shortcode for the login button.
 		add_shortcode( 'openid_connect_generic_login_button', array( $login_form, 'make_login_button' ) );
+		add_shortcode( 'openid_connect_generic_logout_button', array( $login_form, 'make_logout_button' ) );
 		add_shortcode( 'openid_connect_generic_login_url', array( $login_form, 'make_login_url' ) );
 
 		$login_form->handle_redirect_login_type_auto();
@@ -162,6 +163,34 @@ class OpenID_Connect_Generic_Login_Form {
 		HTML;
 
 		return $login_button;
+	}
+
+	/**
+	 * Create a logout button (link).
+	 *
+	 * @param array $atts Array of optional attributes to override login buton
+	 * functionality when used by shortcode.
+	 *
+	 * @return string
+	 */
+	public function make_logout_button( $atts = array() ) {
+
+		$atts = shortcode_atts(
+			array(
+				'button_text' => __( 'Logg ut', 'daggerhart-openid-connect-generic' ),
+			),
+			$atts,
+			'openid_connect_generic_login_button'
+		);
+
+		$text = apply_filters( 'openid-connect-generic-login-button-text', $atts['button_text'] );
+		$text = esc_html( $text );
+
+		$logout_button = <<<HTML
+		<a class="icon-link min-side icon-min-side" href="/wp-admin/admin-ajax.php?action=openid-connect-logout">{$text}</a>
+		HTML;
+
+		return $logout_button;
 	}
 
 	public function make_login_url( $atts = array() ) {
